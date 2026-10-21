@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>APIs &amp; Postman Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Weeks 5–7</p>
+    <h1>APIs &amp; Postman</h1>
+    <p class="lede">Read the docs, get the request working in Postman, then write the same request in JavaScript.</p>
+    <div class="syntax"><span><b>GET</b> https://api.example.com<b>/plants</b>?<b>sun</b>=full&amp;<b>page</b>=2</span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>Parts of a request</h2>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td>Method</td><td><code>GET</code> read, <code>POST</code> create, <code>PUT</code>/<code>PATCH</code> update, <code>DELETE</code> remove</td></tr>
+          <tr><td>Base URL</td><td><code>https://api.example.com</code></td></tr>
+          <tr><td>Endpoint</td><td><code>/plants</code> or <code>/plants/42</code></td></tr>
+          <tr><td>Query params</td><td><code>?sun=full&amp;page=2</code> filters and options</td></tr>
+          <tr><td>Headers</td><td>Extra info: content type, auth</td></tr>
+          <tr><td>Body</td><td>Data you send with POST/PUT, usually JSON</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Parts of a response</h2>
+      <ul>
+        <li><strong>Status code</strong>: did it work?</li>
+        <li><strong>Headers</strong>: content type, rate-limit info</li>
+        <li><strong>Body</strong>: the data, usually JSON</li>
+      </ul>
+      <p>Before you write any code, find the exact field you need in the body. For example, is it <code>data.results[0].name</code> or <code>data.name</code>?</p>
+    </section>
+
+    <section class="rc">
+      <h2>Status codes</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Code</th><th>Meaning</th><th>Whose fix?</th></tr></thead>
+        <tbody>
+          <tr><td>200 / 201</td><td>OK / Created</td><td>none</td></tr>
+          <tr><td>400</td><td>Bad request</td><td>yours: check params</td></tr>
+          <tr><td>401</td><td>Not authenticated</td><td>yours: missing/wrong key</td></tr>
+          <tr><td>403</td><td>Not allowed</td><td>yours: key lacks access</td></tr>
+          <tr><td>404</td><td>Not found</td><td>yours: check the URL</td></tr>
+          <tr><td>429</td><td>Too many requests</td><td>wait, then retry</td></tr>
+          <tr><td>500 / 503</td><td>Server problem</td><td>theirs: try later</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Postman workflow <span class="when">Week 5 Day 1</span></h2>
+      <ol>
+        <li>Make a <strong>Collection</strong> for the project.</li>
+        <li>Add a request. Pick the method and paste the URL.</li>
+        <li>Put query params in the <strong>Params</strong> tab, not by hand.</li>
+        <li>Click <strong>Send</strong>. Read the status, then the body.</li>
+        <li><strong>Save</strong> the working request (<kbd>Ctrl</kbd> + <kbd>S</kbd>).</li>
+      </ol>
+    </section>
+
+    <section class="rc">
+      <h2>Postman variables <span class="when">Week 5 Day 2</span></h2>
+      <p>Set them once in an <strong>Environment</strong>, then use double curly braces anywhere:</p>
+      <div class="code"><pre>{{baseUrl}}/plants?sun=full
+Authorization: Bearer {{apiKey}}</pre></div>
+      <p>Put keys in the <strong>Current value</strong> column. That column stays on your computer and isn't shared with the collection.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Where the key goes <span class="when">Week 6 Day 2</span></h2>
+      <p>Each API's docs say which of these it uses:</p>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td>Query param</td><td><code>?api_key=KEY</code></td></tr>
+          <tr><td>Custom header</td><td><code>X-Api-Key: KEY</code></td></tr>
+          <tr><td>Bearer token</td><td><code>Authorization: Bearer KEY</code></td></tr>
+          <tr><td>None</td><td>Open APIs, no key needed</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Postman → fetch</h2>
+      <p>Postman's <strong>&lt;/&gt; Code</strong> button (right side) shows the request as JavaScript fetch code. Compare it with what you wrote:</p>
+      <div class="code"><pre>const url = `${BASE_URL}/plants?sun=full`;
+const response = await fetch(url, {
+  headers: { Accept: "application/json" },
+});</pre></div>
+      <p>Same method, same URL, same headers. If Postman works and fetch doesn't, one of those is different.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Pagination <span class="when">Week 6 Day 3</span></h2>
+      <p>APIs send results a page at a time. Look in the docs or the response for something like:</p>
+      <div class="code"><pre>{
+  "page": 2,
+  "total_pages": 9,
+  "next": "https://api.example.com/plants?page=3",
+  "results": [ ... ]
+}</pre></div>
+      <p>Disable your <strong>Next</strong> button when there's no next page, and show "Page 2 of 9".</p>
+    </section>
+
+    <section class="rc">
+      <h2>Rate limits</h2>
+      <ul>
+        <li>A <strong>429</strong> status means slow down.</li>
+        <li>Check for a <code>Retry-After</code> header. It gives the number of seconds to wait.</li>
+        <li>Disable the button while a request is running, so double-clicks don't send two requests.</li>
+        <li>Tell the user to wait. Don't retry in a loop.</li>
+      </ul>
+    </section>
+
+    <section class="rc">
+      <h2>Keep keys secret <span class="when">Week 7 Day 5</span></h2>
+      <p>Anything in frontend code is public, including GitHub Pages sites and private repos you share. When an API needs a secret key:</p>
+      <ol>
+        <li>A small server (the <strong>proxy</strong>) on Render holds the key as an <strong>environment variable</strong>.</li>
+        <li>Your page calls <em>your proxy</em>. It never sees the key.</li>
+        <li>The proxy adds the key and calls the real API.</li>
+      </ol>
+      <div class="code"><pre><span class="c">// on the server only</span>
+const key = process.env.API_KEY;</pre></div>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">Pushed a key to GitHub</p><p class="fix">Deleting the line isn't enough, because it's still in the history. Tell your instructor and get a new key.</p></div>
+      <div class="pit"><p class="bad">401 even though the key is right</p><p class="fix">It's in the wrong place. Check whether the docs want a header or a query param, and check the exact name.</p></div>
+      <div class="pit"><p class="bad">Works in Postman, fails in the page</p><p class="fix">Compare URL, method and headers. If the console says CORS, you need the proxy.</p></div>
+      <div class="pit"><p class="bad"><code>undefined</code> on the page</p><p class="fix">Wrong path into the data. <code>console.log(data)</code> and follow it one level at a time.</p></div>
+    </div>
+  </section>
+
+  <footer><a href="responsive.html">← Responsive &amp; Frameworks</a><a href="storage.html">Next: localStorage →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

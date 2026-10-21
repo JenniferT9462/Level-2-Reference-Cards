@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Terminal &amp; Git Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 1 · Every day after</p>
+    <h1>Terminal &amp; Git</h1>
+    <p class="lede">Move around your computer by typing, then save snapshots of your work and send them to GitHub.</p>
+    <div class="syntax"><span><b>git add</b> .</span><span><b>git commit</b> -m "…"</span><span><b>git push</b></span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>Where am I?</h2>
+      <p>Use Git Bash on Windows or Terminal on a Mac. Check where you are before you run anything else.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>pwd</code></td><td>Print the folder you're in</td></tr>
+          <tr><td><code>ls</code> / <code>ls -a</code></td><td>List what's here; <code>-a</code> shows hidden files like <code>.git</code></td></tr>
+          <tr><td><code>cd name</code></td><td>Go into a folder</td></tr>
+          <tr><td><code>cd ..</code></td><td>Go up one folder</td></tr>
+          <tr><td><code>cd ~</code></td><td>Go to your home folder</td></tr>
+          <tr><td><code>mkdir name</code></td><td>Make a folder</td></tr>
+          <tr><td><code>touch index.html</code></td><td>Make an empty file</td></tr>
+          <tr><td><code>code .</code></td><td>Open this folder in VS Code</td></tr>
+          <tr><td><code>clear</code></td><td>Clear the screen</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Set up Git once <span class="when">Day 1</span></h2>
+      <p>Git puts this name and email on every commit you make. Use the email from your GitHub account.</p>
+      <div class="code"><pre>git --version
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+git config --global init.defaultBranch main
+
+<span class="c"># check what you set</span>
+git config --global --list</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>The ACP loop</h2>
+      <p>Add, commit, push. You'll do this many times a day.</p>
+      <ol>
+        <li><strong>Add</strong> picks which changes go in the next snapshot (staging).</li>
+        <li><strong>Commit</strong> saves the snapshot on your computer with a message.</li>
+        <li><strong>Push</strong> sends your commits to GitHub.</li>
+      </ol>
+      <div class="code"><pre>git status
+git add .
+git commit -m "Add signup form labels"
+git push</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Start a repo and connect it <span class="when">Day 2</span></h2>
+      <p>Make an empty repo on GitHub first (no README), then copy its URL.</p>
+      <div class="code"><pre>cd ~/Documents/codex
+mkdir week-1-checkpoint
+cd week-1-checkpoint
+git init
+<span class="c"># ...make a file, then ACP once...</span>
+git remote add origin https://github.com/USER/week-1-checkpoint.git
+git push -u origin main</pre></div>
+      <p><code>-u</code> is only needed on the first push. After that, plain <code>git push</code> works.</p>
+      <p>If the repo already exists on GitHub, use <code>git clone URL</code> instead of all of the above.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Read the state</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Command</th><th>Tells you</th></tr></thead>
+        <tbody>
+          <tr><td><code>git status</code></td><td>Branch, changed files, what's staged</td></tr>
+          <tr><td><code>git log --oneline</code></td><td>Your commits, newest first</td></tr>
+          <tr><td><code>git diff</code></td><td>Exact lines changed since the last commit</td></tr>
+          <tr><td><code>git remote -v</code></td><td>Which GitHub repo you push to</td></tr>
+        </tbody>
+      </table></div>
+      <p>If the screen ends in <code>:</code> or <code>(END)</code>, press <kbd>q</kbd> to get out.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Commit messages</h2>
+      <p>Write what the commit does, as if finishing the sentence "This commit will…"</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Clear</th><th>Unclear</th></tr></thead>
+        <tbody>
+          <tr><td>Add README with setup info</td><td>stuff</td></tr>
+          <tr><td>Fix broken nav link to about page</td><td>fixed it</td></tr>
+          <tr><td>Style hero with dark overlay</td><td>update</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>.gitignore <span class="when">Day 3</span></h2>
+      <p>A file named exactly <code>.gitignore</code> in the top folder of the repo. Git skips anything that matches a line in it.</p>
+      <div class="code"><pre><span class="c"># system junk</span>
+.DS_Store
+Thumbs.db
+
+<span class="c"># editor settings</span>
+.vscode/
+
+<span class="c"># secrets, never commit</span>
+.env</pre></div>
+      <p>If a file was already committed, adding it here won't remove it. Run <code>git rm --cached filename</code>, then commit.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Undo, safely</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Situation</th><th>Command</th></tr></thead>
+        <tbody>
+          <tr><td>Throw away edits to a file</td><td><code>git restore file.html</code></td></tr>
+          <tr><td>Unstage a file you added</td><td><code>git restore --staged file.html</code></td></tr>
+          <tr><td>Fix the last message (not pushed yet)</td><td><code>git commit --amend -m "Better message"</code></td></tr>
+        </tbody>
+      </table></div>
+      <p><code>git restore</code> can't be undone. When you're not sure, ask before running it.</p>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">fatal: not a git repository</p><p class="fix">You're in the wrong folder. Run <code>pwd</code>, then <code>cd</code> into your project.</p></div>
+      <div class="pit"><p class="bad">A strange editor opened after <code>git commit</code></p><p class="fix">You left off <code>-m</code>. Press <kbd>Esc</kbd>, type <code>:wq</code>, press <kbd>Enter</kbd>.</p></div>
+      <div class="pit"><p class="bad">Push rejected: "fetch first"</p><p class="fix">GitHub has commits you don't. Run <code>git pull</code>, then <code>git push</code>.</p></div>
+      <div class="pit"><p class="bad"><code>git init</code> in your home folder</p><p class="fix">Now everything looks "changed". Stop and ask your instructor before deleting anything.</p></div>
+    </div>
+  </section>
+
+  <footer><span>CodeX Level 2 · Terminal &amp; Git</span><a href="branches-prs.html">Next: Branches, PRs &amp; Pages →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

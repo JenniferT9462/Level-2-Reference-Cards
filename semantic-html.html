@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Semantic HTML Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 2 · Days 1–2</p>
+    <h1>Semantic HTML &amp; Forms</h1>
+    <p class="lede">Choose tags for what the content <em>is</em>, so screen readers, search engines and other developers can follow your page.</p>
+    <div class="syntax"><span>&lt;<b>header</b>&gt;</span><span>&lt;<b>nav</b>&gt;</span><span>&lt;<b>main</b>&gt;</span><span>&lt;<b>footer</b>&gt;</span><span>&lt;<b>label for</b>&gt;</span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>Page skeleton</h2>
+      <div class="code"><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport"
+      content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;Garden Club Signup&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;header&gt;...&lt;/header&gt;
+    &lt;main&gt;...&lt;/main&gt;
+    &lt;footer&gt;...&lt;/footer&gt;
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre></div>
+      <p>Without the viewport line, phones zoom out and show a tiny desktop page.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Landmarks</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Tag</th><th>Use it for</th></tr></thead>
+        <tbody>
+          <tr><td><code>&lt;header&gt;</code></td><td>Logo, site name, intro</td></tr>
+          <tr><td><code>&lt;nav&gt;</code></td><td>The main group of links</td></tr>
+          <tr><td><code>&lt;main&gt;</code></td><td>The page's main content (once per page)</td></tr>
+          <tr><td><code>&lt;section&gt;</code></td><td>A themed group that has its own heading</td></tr>
+          <tr><td><code>&lt;article&gt;</code></td><td>Something that makes sense alone, like a card or post</td></tr>
+          <tr><td><code>&lt;aside&gt;</code></td><td>Side info, related to the main content</td></tr>
+          <tr><td><code>&lt;footer&gt;</code></td><td>Contact, credits, copyright</td></tr>
+          <tr><td><code>&lt;div&gt;</code></td><td>Only for styling, when nothing else fits</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Headings in order</h2>
+      <p>Use one <code>&lt;h1&gt;</code>. Go down one level at a time, and don't skip from <code>h2</code> to <code>h4</code>. Choose the level by importance, then use CSS to change the size.</p>
+      <div class="code"><pre>&lt;h1&gt;Garden Club&lt;/h1&gt;
+  &lt;h2&gt;Why join&lt;/h2&gt;
+  &lt;h2&gt;Sign up&lt;/h2&gt;
+    &lt;h3&gt;Volunteer times&lt;/h3&gt;</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>A labeled input</h2>
+      <p>The label's <code>for</code> matches the input's <code>id</code>. Clicking the label then focuses the box, and screen readers read the label aloud.</p>
+      <div class="code"><pre>&lt;label for="email"&gt;Email&lt;/label&gt;
+&lt;input type="email" id="email" name="email" required&gt;</pre></div>
+      <p><code>name</code> is the key the data is sent under. Without it, the value isn't sent.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Input types</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>type=</th><th>Gives you</th></tr></thead>
+        <tbody>
+          <tr><td><code>text</code></td><td>Plain text</td></tr>
+          <tr><td><code>email</code></td><td>Checks for an @; email keyboard on phones</td></tr>
+          <tr><td><code>tel</code></td><td>Number pad on phones</td></tr>
+          <tr><td><code>number</code></td><td>Arrows, <code>min</code> / <code>max</code></td></tr>
+          <tr><td><code>date</code></td><td>A date picker</td></tr>
+          <tr><td><code>checkbox</code></td><td>Yes or no, or pick several</td></tr>
+          <tr><td><code>radio</code></td><td>Pick exactly one (same <code>name</code>)</td></tr>
+        </tbody>
+      </table></div>
+      <p>Also: <code>&lt;select&gt;</code> for a dropdown, <code>&lt;textarea&gt;</code> for long text.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Group radio buttons</h2>
+      <div class="code"><pre>&lt;fieldset&gt;
+  &lt;legend&gt;Preferred day&lt;/legend&gt;
+  &lt;input type="radio" id="sat" name="day" value="sat"&gt;
+  &lt;label for="sat"&gt;Saturday&lt;/label&gt;
+  &lt;input type="radio" id="sun" name="day" value="sun"&gt;
+  &lt;label for="sun"&gt;Sunday&lt;/label&gt;
+&lt;/fieldset&gt;</pre></div>
+      <p>The <code>&lt;legend&gt;</code> is the question; each label is one answer.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Built-in validation</h2>
+      <p>The browser checks these before it submits. You don't need JavaScript for them.</p>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td><code>required</code></td><td>Can't be empty</td></tr>
+          <tr><td><code>minlength="2"</code></td><td>At least 2 characters</td></tr>
+          <tr><td><code>min="1" max="10"</code></td><td>Number range</td></tr>
+          <tr><td><code>pattern="[0-9]{5}"</code></td><td>Must match, here a 5-digit ZIP code</td></tr>
+        </tbody>
+      </table></div>
+      <div class="code"><pre><span class="c">/* style only after the user has typed */</span>
+input:user-invalid { border-color: crimson; }</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>URLs are not secrets</h2>
+      <p>A form with <code>method="get"</code> puts every answer in the address bar, where it's saved in history and can be shared:</p>
+      <div class="code"><pre>signup.html?name=Sam&amp;email=sam%40mail.com</pre></div>
+      <p>Anything in your HTML, CSS or JavaScript can be read by anyone with View Source. Never put passwords or keys there.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Link or button?</h2>
+      <ul>
+        <li><strong><code>&lt;a href&gt;</code></strong> goes somewhere: another page or a section.</li>
+        <li><strong><code>&lt;button&gt;</code></strong> does something: submit, open, toggle.</li>
+      </ul>
+      <p>Inside a form, a button submits by default. Add <code>type="button"</code> if it shouldn't.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Images and alt text</h2>
+      <div class="code"><pre>&lt;img src="images/seedlings.jpg"
+  alt="Volunteers planting seedlings in raised beds"&gt;
+
+<span class="c">&lt;!-- decoration only: empty alt --&gt;</span>
+&lt;img src="images/leaf.svg" alt=""&gt;</pre></div>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">Clicking the label does nothing</p><p class="fix">Its <code>for</code> doesn't match the input's <code>id</code> exactly. Check spelling and case.</p></div>
+      <div class="pit"><p class="bad">Using placeholder as the label</p><p class="fix">The placeholder disappears when you type. Always add a real <code>&lt;label&gt;</code>.</p></div>
+      <div class="pit"><p class="bad">Every radio can be checked at once</p><p class="fix">They need the same <code>name</code> to work as one group.</p></div>
+      <div class="pit"><p class="bad">A page made only of divs</p><p class="fix">Swap in <code>header</code>, <code>main</code>, <code>section</code> and <code>footer</code>. It looks the same and reads better.</p></div>
+    </div>
+  </section>
+
+  <footer><a href="markdown.html">← Markdown &amp; README</a><a href="css-layout.html">Next: Box Model &amp; Flexbox →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Responsive Layout Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 4</p>
+    <h1>Responsive &amp; Frameworks</h1>
+    <p class="lede">Style the phone layout first, then add changes for wider screens. Bootstrap and Tailwind give you ready-made classes for both.</p>
+    <div class="syntax"><span>phone <b>→</b> tablet <b>→</b> desktop</span><span>@media (<b>min-width</b>: 768px)</span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>Mobile-first CSS</h2>
+      <p>Base styles are for phones. Each media query adds changes for screens <strong>at least</strong> that wide.</p>
+      <div class="code"><pre>.cards {
+  display: flex;
+  flex-direction: column;   <span class="c">/* phone: stacked */</span>
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .cards { flex-direction: row; }  <span class="c">/* tablet and up */</span>
+}</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Breakpoints</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Name</th><th>Bootstrap</th><th>Tailwind</th></tr></thead>
+        <tbody>
+          <tr><td>sm</td><td>576px</td><td>640px</td></tr>
+          <tr><td>md</td><td>768px</td><td>768px</td></tr>
+          <tr><td>lg</td><td>992px</td><td>1024px</td></tr>
+          <tr><td>xl</td><td>1200px</td><td>1280px</td></tr>
+          <tr><td>xxl / 2xl</td><td>1400px</td><td>1536px</td></tr>
+        </tbody>
+      </table></div>
+      <p>In both, a breakpoint means <strong>this width and wider</strong>.</p>
+    </section>
+
+    <section class="rc">
+      <h2>CSS Grid <span class="when">Day 4</span></h2>
+      <div class="code"><pre>.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.feature { grid-column: span 2; }
+
+<span class="c">/* as many columns as fit, each at least 200px */</span>
+.auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}</pre></div>
+      <p><code>1fr</code> means one share of the leftover space.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Flexbox or Grid?</h2>
+      <ul>
+        <li><strong>Flexbox</strong> for one direction: a nav bar, a row of buttons, a card's insides.</li>
+        <li><strong>Grid</strong> for rows <em>and</em> columns together: a gallery, a page layout.</li>
+      </ul>
+      <p>You can use both: a grid of cards, with flexbox inside each card.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Bootstrap setup</h2>
+      <p>Put the CSS link in <code>&lt;head&gt;</code>. Open the docs for the <strong>same version</strong> you linked.</p>
+      <div class="code"><pre>&lt;link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"&gt;</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Bootstrap grid</h2>
+      <p>Container → row → columns. A row has 12 columns.</p>
+      <div class="code"><pre>&lt;div class="container"&gt;
+  &lt;div class="row g-3"&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;A&lt;/div&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;B&lt;/div&gt;
+    &lt;div class="col-12 col-md-12 col-lg-4"&gt;C&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre></div>
+      <p>Phone: full width. <code>md</code>: halves. <code>lg</code>: thirds.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Bootstrap utilities</h2>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td><code>d-flex</code></td><td>display: flex</td></tr>
+          <tr><td><code>flex-column flex-md-row</code></td><td>stack, then row at md</td></tr>
+          <tr><td><code>justify-content-between</code></td><td>space between</td></tr>
+          <tr><td><code>align-items-center</code></td><td>center on the cross axis</td></tr>
+          <tr><td><code>gap-3</code></td><td>gap (scale 0–5)</td></tr>
+          <tr><td><code>p-3</code>, <code>px-4</code>, <code>mb-2</code></td><td>padding / margin</td></tr>
+          <tr><td><code>d-none d-md-block</code></td><td>hide on phones</td></tr>
+          <tr><td><code>btn btn-primary</code></td><td>a styled button</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Tailwind setup</h2>
+      <p>For practice pages, the browser script works. Use the setup link from class if it's different.</p>
+      <div class="code"><pre>&lt;script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"&gt;&lt;/script&gt;</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Tailwind utilities</h2>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td><code>flex flex-col md:flex-row</code></td><td>stack, then row at md</td></tr>
+          <tr><td><code>justify-between items-center</code></td><td>space between, centered</td></tr>
+          <tr><td><code>gap-4</code></td><td>1rem gap (4 × 0.25rem)</td></tr>
+          <tr><td><code>p-4 px-6 mb-2</code></td><td>padding / margin</td></tr>
+          <tr><td><code>grid grid-cols-1 md:grid-cols-3</code></td><td>1 column, then 3</td></tr>
+          <tr><td><code>col-span-2</code></td><td>span 2 columns</td></tr>
+          <tr><td><code>hidden md:block</code></td><td>hide on phones</td></tr>
+          <tr><td><code>bg-emerald-700 text-white rounded-lg</code></td><td>color and shape</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Test it</h2>
+      <ol>
+        <li>Open DevTools (<kbd>F12</kbd>) and click the device toolbar icon (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>).</li>
+        <li>Drag the width from 360px up to 1400px.</li>
+        <li>Look for sideways scrolling, squished text and overlapping boxes.</li>
+      </ol>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">Thinking <code>md:</code> means "only on tablets"</p><p class="fix">It means tablet <em>and up</em>. Style phones with no prefix.</p></div>
+      <div class="pit"><p class="bad">Bootstrap columns don't line up</p><p class="fix"><code>col-*</code> must be direct children of a <code>row</code>, inside a <code>container</code>.</p></div>
+      <div class="pit"><p class="bad">A class from the docs does nothing</p><p class="fix">The docs version doesn't match the version you linked. Check the version picker.</p></div>
+      <div class="pit"><p class="bad">Media query never applies</p><p class="fix">Is the viewport meta tag missing? Or is the query above the rule it should override? Order matters.</p></div>
+    </div>
+  </section>
+
+  <footer><a href="fetch.html">← Async &amp; fetch</a><a href="apis.html">Next: APIs &amp; Postman →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

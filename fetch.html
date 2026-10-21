@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Async &amp; fetch Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 3 Day 4 · Weeks 5–7</p>
+    <h1>Async &amp; fetch</h1>
+    <p class="lede">A request takes time and can fail. Your page should show something useful while it waits, when it works, and when it doesn't.</p>
+    <div class="syntax"><span><b>loading</b></span><span><b>success</b></span><span><b>empty</b></span><span><b>error</b></span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>What a promise is</h2>
+      <p>A promise is a value that isn't ready yet. It ends in one of two states:</p>
+      <ul>
+        <li><strong>fulfilled</strong>: it worked, and here's the value</li>
+        <li><strong>rejected</strong>: it failed, and here's the error</li>
+      </ul>
+      <p>While it waits, it's <strong>pending</strong>. <code>await</code> pauses your function until it settles.</p>
+    </section>
+
+    <section class="rc">
+      <h2>The basic shape</h2>
+      <div class="code"><pre>async function loadPlants() {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+  const data = await response.json();
+  return data;
+}</pre></div>
+      <p>You can only use <code>await</code> inside an <code>async</code> function.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Why check response.ok?</h2>
+      <p><code>fetch</code> only rejects when the network fails. A 404 or 500 still counts as "fulfilled", so you have to check the status yourself.</p>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td><code>response.ok</code></td><td><code>true</code> for 200–299</td></tr>
+          <tr><td><code>response.status</code></td><td>The number, like 404</td></tr>
+          <tr><td><code>response.json()</code></td><td>Reads the body (it's a promise too)</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Show every state</h2>
+      <div class="code"><pre>async function showPlants() {
+  status.textContent = "Loading…";
+  button.disabled = true;
+  try {
+    const data = await loadPlants();
+    if (data.length === 0) {
+      status.textContent = "No plants found.";
+      return;
+    }
+    render(data);
+    status.textContent = "";
+  } catch (error) {
+    status.textContent = "Couldn't load plants. Try again.";
+    console.error(error);
+  } finally {
+    button.disabled = false;
+  }
+}</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Render the result</h2>
+      <div class="code"><pre>function render(plants) {
+  list.replaceChildren();
+  plants.forEach((p) =&gt; {
+    const li = document.createElement("li");
+    li.textContent = `${p.name}: ${p.days} days`;
+    list.append(li);
+  });
+}</pre></div>
+      <p>Show only the fields you need. Use <code>textContent</code> for anything that came from an API.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Build the URL from input <span class="when">Week 7</span></h2>
+      <div class="code"><pre>const params = new URLSearchParams({
+  q: input.value.trim(),
+  limit: 10,
+});
+const url = `https://api.example.com/search?${params}`;</pre></div>
+      <p><code>URLSearchParams</code> encodes spaces and symbols for you.</p>
+    </section>
+
+    <section class="rc">
+      <h2>POST some JSON <span class="when">Week 5</span></h2>
+      <div class="code"><pre>const response = await fetch(url, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ name: "Ava", plots: 2 }),
+});</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Which kind of failure? <span class="when">Week 6</span></h2>
+      <div class="tbl"><table>
+        <thead><tr><th>What happened</th><th>How you can tell</th></tr></thead>
+        <tbody>
+          <tr><td>Network</td><td><code>fetch</code> throws a <code>TypeError</code></td></tr>
+          <tr><td>HTTP error</td><td><code>!response.ok</code></td></tr>
+          <tr><td>Bad JSON</td><td><code>response.json()</code> throws</td></tr>
+          <tr><td>Auth</td><td>Status 401 or 403</td></tr>
+          <tr><td>Rate limit</td><td>Status 429</td></tr>
+          <tr><td>Empty</td><td>OK, but the array is empty</td></tr>
+        </tbody>
+      </table></div>
+      <p>Give each one its own message, so the user knows whether to retry, wait or fix their search.</p>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">You see <code>Promise {&lt;pending&gt;}</code></p><p class="fix">You forgot <code>await</code>, so you logged the promise instead of its value.</p></div>
+      <div class="pit"><p class="bad">await is only valid in async functions</p><p class="fix">Add <code>async</code> before the function that uses <code>await</code>.</p></div>
+      <div class="pit"><p class="bad">A 404 page shows "Success!"</p><p class="fix">Check <code>response.ok</code> before reading the data.</p></div>
+      <div class="pit"><p class="bad">Blocked by CORS policy</p><p class="fix">The API doesn't allow browser requests. It works in Postman but needs a proxy for your page (Week 7).</p></div>
+    </div>
+  </section>
+
+  <footer><a href="arrays.html">← Arrays &amp; Data</a><a href="responsive.html">Next: Responsive &amp; Frameworks →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

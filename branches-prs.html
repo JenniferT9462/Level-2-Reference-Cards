@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Branches &amp; PRs Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 1 · Days 3–4</p>
+    <h1>Branches, PRs &amp; Pages</h1>
+    <p class="lede">Work on <code>dev</code>, merge into <code>main</code> with a pull request, and put <code>main</code> online with GitHub Pages.</p>
+    <div class="syntax"><span><b>dev</b> → PR → <b>main</b> → Pages</span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>What a branch is</h2>
+      <p>A branch is a separate line of commits. <code>main</code> holds the finished version. <code>dev</code> is where you try things. When <code>dev</code> is ready, a pull request copies its commits into <code>main</code>.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>git branch</code></td><td>List branches; <code>*</code> marks yours</td></tr>
+          <tr><td><code>git switch -c dev</code></td><td>Make <code>dev</code> and move to it</td></tr>
+          <tr><td><code>git switch main</code></td><td>Move back to <code>main</code></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Make dev and push it <span class="when">Day 3</span></h2>
+      <div class="code"><pre>git switch -c dev
+<span class="c"># ...edit, then ACP...</span>
+git add .
+git commit -m "Add about section"
+git push -u origin dev</pre></div>
+      <p>The first push of a new branch needs <code>-u origin dev</code>. After that, <code>git push</code> is enough.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Open a pull request <span class="when">Day 4</span></h2>
+      <ol>
+        <li>On GitHub, open your repo and click <strong>Pull requests</strong>, then <strong>New pull request</strong>.</li>
+        <li>Set <strong>base: main</strong> and <strong>compare: dev</strong>.</li>
+        <li>Check the list of changes, then click <strong>Create pull request</strong>.</li>
+        <li>Give it a title and a sentence about what changed.</li>
+        <li>Click <strong>Merge pull request</strong>, then <strong>Confirm merge</strong>.</li>
+      </ol>
+      <p>GitHub often shows a yellow "dev had recent pushes" banner. Its <strong>Compare &amp; pull request</strong> button is a shortcut to step 3.</p>
+    </section>
+
+    <section class="rc">
+      <h2>After the merge</h2>
+      <p>The merge happened on GitHub, so your computer's <code>main</code> is behind. Bring it up to date:</p>
+      <div class="code"><pre>git switch main
+git pull
+git log --oneline   <span class="c"># the dev commits are here now</span>
+git switch dev      <span class="c"># back to work</span></pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Turn on GitHub Pages</h2>
+      <ol>
+        <li>Repo <strong>Settings</strong> → <strong>Pages</strong>.</li>
+        <li>Source: <strong>Deploy from a branch</strong>.</li>
+        <li>Branch: <strong>main</strong>, folder: <strong>/ (root)</strong>. Click <strong>Save</strong>.</li>
+        <li>Wait 1–2 minutes. The <strong>Actions</strong> tab shows progress.</li>
+      </ol>
+      <p>Your site's address:</p>
+      <div class="code"><pre>https://USERNAME.github.io/REPO-NAME/</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Reading a merge conflict</h2>
+      <p>This happens when two branches change the same line. Git marks both versions in the file:</p>
+      <div class="code"><pre><span class="k">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+&lt;h1&gt;Garden Club&lt;/h1&gt;
+<span class="k">=======</span>
+&lt;h1&gt;Community Garden Club&lt;/h1&gt;
+<span class="k">&gt;&gt;&gt;&gt;&gt;&gt;&gt; dev</span></pre></div>
+      <p>Keep the line you want, delete all three marker lines, save, then add and commit.</p>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">PR says "nothing to compare"</p><p class="fix">Your <code>dev</code> commits aren't on GitHub yet. Run <code>git push</code> while on <code>dev</code>.</p></div>
+      <div class="pit"><p class="bad">Committed on main by accident</p><p class="fix">Run <code>git status</code> before every commit. It shows your branch on the first line.</p></div>
+      <div class="pit"><p class="bad">Pages shows 404</p><p class="fix">The home page must be named <code>index.html</code> (all lowercase) and be in the top folder, not a subfolder.</p></div>
+      <div class="pit"><p class="bad">Pages shows the old version</p><p class="fix">Did the PR merge? Then wait a minute and hard reload with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd>.</p></div>
+    </div>
+  </section>
+
+  <footer><a href="terminal-git.html">← Terminal &amp; Git</a><a href="markdown.html">Next: Markdown &amp; README →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

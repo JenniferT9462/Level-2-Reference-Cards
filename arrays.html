@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Arrays &amp; Data Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 3 Day 5 · Week 6 Day 4</p>
+    <h1>Arrays &amp; Data</h1>
+    <p class="lede">Loop over a list, reshape it, filter it, and boil it down to one number. Every example uses this array:</p>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>The sample data</h2>
+      <div class="code"><pre>const plants = [
+  { name: "Tomato", days: 70, sun: true },
+  { name: "Lettuce", days: 45, sun: false },
+  { name: "Pepper", days: 80, sun: true },
+];</pre></div>
+      <p>This is the same shape most APIs send back: an array of objects.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Basics</h2>
+      <div class="code"><pre>plants.length        <span class="c">// 3</span>
+plants[0]            <span class="c">// the Tomato object</span>
+plants[0].name       <span class="c">// "Tomato"</span>
+plants.at(-1)        <span class="c">// the last item</span>
+plants.push(newOne)  <span class="c">// add to the end</span></pre></div>
+      <p>Indexes start at 0, so the last index is <code>length - 1</code>.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Loop: for…of and forEach</h2>
+      <p>Use these to <strong>do something</strong> with each item, like put it on the page.</p>
+      <div class="code"><pre>for (const plant of plants) {
+  console.log(plant.name);
+}
+
+plants.forEach((plant, i) =&gt; {
+  console.log(i, plant.name);
+});</pre></div>
+      <p><code>forEach</code> returns nothing, so don't save its result in a variable.</p>
+    </section>
+
+    <section class="rc">
+      <h2>map: reshape every item</h2>
+      <p>Gives back a <strong>new array, the same length</strong>.</p>
+      <div class="code"><pre>const names = plants.map((p) =&gt; p.name);
+<span class="c">// ["Tomato", "Lettuce", "Pepper"]</span>
+
+const labels = plants.map((p) =&gt; `${p.name} (${p.days}d)`);</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>filter: keep some</h2>
+      <p>Gives back a <strong>new, shorter (or equal) array</strong>. Return <code>true</code> to keep an item.</p>
+      <div class="code"><pre>const sunny = plants.filter((p) =&gt; p.sun);
+const quick = plants.filter((p) =&gt; p.days &lt; 60);</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>find and some</h2>
+      <div class="code"><pre>plants.find((p) =&gt; p.name === "Pepper");
+<span class="c">// the first match, or undefined</span>
+
+plants.some((p) =&gt; p.days &gt; 75);  <span class="c">// true</span>
+plants.every((p) =&gt; p.sun);       <span class="c">// false</span></pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>reduce: boil down to one value <span class="when">Week 6</span></h2>
+      <div class="code"><pre>const totalDays = plants.reduce(
+  (sum, p) =&gt; sum + p.days,
+  0           <span class="c">// starting value</span>
+);
+<span class="c">// 195</span>
+
+const average = totalDays / plants.length;</pre></div>
+      <p>Always pass a starting value. Without one, an empty array throws an error.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Chain them</h2>
+      <p>Read it top to bottom: keep, reshape, then use.</p>
+      <div class="code"><pre>const sunnyNames = plants
+  .filter((p) =&gt; p.sun)
+  .map((p) =&gt; p.name);
+<span class="c">// ["Tomato", "Pepper"]</span></pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Sort a copy</h2>
+      <div class="code"><pre>const byDays = [...plants].sort((a, b) =&gt; a.days - b.days);
+const byName = [...plants].sort((a, b) =&gt;
+  a.name.localeCompare(b.name)
+);</pre></div>
+      <p><code>sort</code> changes the original array. Copy it with <code>[...plants]</code> first.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Which one?</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>I want…</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>to do something with each</td><td><code>forEach</code> / <code>for…of</code></td></tr>
+          <tr><td>a changed copy of each</td><td><code>map</code></td></tr>
+          <tr><td>only some of them</td><td><code>filter</code></td></tr>
+          <tr><td>the first match</td><td><code>find</code></td></tr>
+          <tr><td>yes/no about the list</td><td><code>some</code> / <code>every</code></td></tr>
+          <tr><td>a total, count or average</td><td><code>reduce</code></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">map gives <code>[undefined, undefined]</code></p><p class="fix">With curly braces you need <code>return</code>: <code>(p) =&gt; { return p.name; }</code></p></div>
+      <div class="pit"><p class="bad">Changed the API data by accident</p><p class="fix"><code>map</code> and <code>filter</code> make copies. <code>sort</code> and <code>push</code> change the original.</p></div>
+      <div class="pit"><p class="bad"><code>plants.name</code> is undefined</p><p class="fix">The array has no name. Its items do: <code>plants[0].name</code>.</p></div>
+      <div class="pit"><p class="bad">reduce returns "07045…"</p><p class="fix">The numbers are strings. Use <code>Number(p.days)</code> inside the callback.</p></div>
+    </div>
+  </section>
+
+  <footer><a href="js-basics.html">← JavaScript &amp; the DOM</a><a href="fetch.html">Next: Async &amp; fetch →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

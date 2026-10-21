@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>VS Code &amp; DevTools Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Tools · All weeks</p>
+    <h1>VS Code &amp; DevTools</h1>
+    <p class="lede">Shortcuts that save time every day. Windows on the left, Mac on the right.</p>
+    <div class="syntax"><span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> finds any command</span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>Get around VS Code</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Windows</th><th>Mac</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>P</kbd></td><td><kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd></td><td>Command palette</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>P</kbd></td><td><kbd>Cmd</kbd> <kbd>P</kbd></td><td>Open a file by name</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>`</kbd></td><td><kbd>Ctrl</kbd> <kbd>`</kbd></td><td>Show/hide terminal</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>B</kbd></td><td><kbd>Cmd</kbd> <kbd>B</kbd></td><td>Show/hide sidebar</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>\</kbd></td><td><kbd>Cmd</kbd> <kbd>\</kbd></td><td>Split editor</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>F</kbd></td><td><kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>F</kbd></td><td>Search all files</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>G</kbd></td><td><kbd>Ctrl</kbd> <kbd>G</kbd></td><td>Go to line number</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Edit faster</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Windows</th><th>Mac</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd> <kbd>/</kbd></td><td><kbd>Cmd</kbd> <kbd>/</kbd></td><td>Comment line(s)</td></tr>
+          <tr><td><kbd>Alt</kbd> <kbd>↑</kbd>/<kbd>↓</kbd></td><td><kbd>Option</kbd> <kbd>↑</kbd>/<kbd>↓</kbd></td><td>Move line up/down</td></tr>
+          <tr><td><kbd>Shift</kbd> <kbd>Alt</kbd> <kbd>↓</kbd></td><td><kbd>Shift</kbd> <kbd>Option</kbd> <kbd>↓</kbd></td><td>Copy line down</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>D</kbd></td><td><kbd>Cmd</kbd> <kbd>D</kbd></td><td>Select next match</td></tr>
+          <tr><td><kbd>Alt</kbd> + click</td><td><kbd>Option</kbd> + click</td><td>Add a cursor</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>K</kbd></td><td><kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>K</kbd></td><td>Delete line</td></tr>
+          <tr><td><kbd>Shift</kbd> <kbd>Alt</kbd> <kbd>F</kbd></td><td><kbd>Shift</kbd> <kbd>Option</kbd> <kbd>F</kbd></td><td>Format document</td></tr>
+          <tr><td><kbd>F2</kbd></td><td><kbd>F2</kbd></td><td>Rename everywhere</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>S</kbd></td><td><kbd>Cmd</kbd> <kbd>S</kbd></td><td>Save (do it often!)</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Emmet in HTML files</h2>
+      <p>Type the short form, then press <kbd>Tab</kbd> or <kbd>Enter</kbd>.</p>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td><code>!</code></td><td>Full HTML page skeleton</td></tr>
+          <tr><td><code>.card</code></td><td><code>&lt;div class="card"&gt;</code></td></tr>
+          <tr><td><code>ul&gt;li*3</code></td><td>A list with 3 items</td></tr>
+          <tr><td><code>a:link</code></td><td><code>&lt;a href="http://"&gt;</code></td></tr>
+          <tr><td><code>link:css</code></td><td>A stylesheet link</td></tr>
+          <tr><td><code>lorem10</code></td><td>10 words of filler text</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Terminal keys</h2>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td><kbd>↑</kbd></td><td>Bring back your last command</td></tr>
+          <tr><td><kbd>Tab</kbd></td><td>Finish a file or folder name</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>C</kbd></td><td>Stop a running command (doesn't copy here)</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>L</kbd></td><td>Clear the screen</td></tr>
+          <tr><td><kbd>q</kbd></td><td>Leave <code>git log</code> or a <code>(END)</code> screen</td></tr>
+        </tbody>
+      </table></div>
+      <p>Copy and paste in Git Bash: right-click, or <kbd>Ctrl</kbd> <kbd>Insert</kbd> / <kbd>Shift</kbd> <kbd>Insert</kbd>.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Useful extensions</h2>
+      <ul>
+        <li><strong>Live Server</strong>: opens your page and reloads it when you save. Right-click <code>index.html</code> → <em>Open with Live Server</em>.</li>
+        <li><strong>Prettier</strong>: tidies your formatting when you save.</li>
+        <li><strong>Live Share</strong>: lets your instructor see your code when you need help.</li>
+        <li><strong>Code Spell Checker</strong>: catches typos in text and names.</li>
+      </ul>
+    </section>
+
+    <section class="rc">
+      <h2>Browser DevTools</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Windows</th><th>Mac</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>F12</kbd></td><td><kbd>Cmd</kbd> <kbd>Option</kbd> <kbd>I</kbd></td><td>Open DevTools</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>C</kbd></td><td><kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>C</kbd></td><td>Pick an element to inspect</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>J</kbd></td><td><kbd>Cmd</kbd> <kbd>Option</kbd> <kbd>J</kbd></td><td>Jump to Console</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>M</kbd></td><td><kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>M</kbd></td><td>Phone/tablet view</td></tr>
+          <tr><td><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd></td><td><kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>R</kbd></td><td>Hard reload</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Which DevTools tab?</h2>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td><strong>Elements</strong></td><td>HTML and CSS: why a style isn't applying</td></tr>
+          <tr><td><strong>Console</strong></td><td>JavaScript errors and your <code>console.log</code></td></tr>
+          <tr><td><strong>Network</strong></td><td>API requests: URL, status, response body</td></tr>
+          <tr><td><strong>Application</strong></td><td>localStorage</td></tr>
+        </tbody>
+      </table></div>
+      <p>In Network, turn on <strong>Disable cache</strong> while DevTools is open to always get your latest CSS.</p>
+    </section>
+  </div>
+
+  <footer><a href="storage.html">← localStorage &amp; App State</a><a href="links.html">Outside links →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

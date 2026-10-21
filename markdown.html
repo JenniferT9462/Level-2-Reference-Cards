@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Markdown &amp; README Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 1 · Every repo</p>
+    <h1>Markdown &amp; README</h1>
+    <p class="lede">A README is the front page of your repo. GitHub turns its Markdown into headings, lists, links and tables.</p>
+    <div class="syntax"><span><b>#</b> heading</span><span><b>**</b>bold<b>**</b></span><span><b>-</b> list</span><span><b>[</b>text<b>](</b>url<b>)</b></span><span><b>`</b>code<b>`</b></span><span><b>|</b> table <b>|</b></span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>Headings and text</h2>
+      <div class="code"><pre># Project name
+## Section
+### Smaller section
+
+Plain paragraph text.
+Leave a blank line between paragraphs.
+
+**bold** and *italic*</pre></div>
+      <p>Use one <code>#</code> heading at the top, like an <code>&lt;h1&gt;</code>.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Lists</h2>
+      <div class="code"><pre>- Bullet
+- Another bullet
+  - Indented with 2 spaces
+
+1. First step
+2. Second step
+
+- [x] Done task
+- [ ] Not yet</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Links and images</h2>
+      <div class="code"><pre>[Live site](https://user.github.io/repo/)
+
+![Screenshot of the signup page](images/screenshot.png)</pre></div>
+      <p>The image text in <code>[ ]</code> is the alt text. Write what the image shows.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Code</h2>
+      <p>One backtick for code inside a sentence. Three backticks on their own lines for a block.</p>
+      <div class="code"><pre>Run `git status` first.
+
+```bash
+git add .
+git commit -m "Add README"
+```</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Tables</h2>
+      <p>Good for an ACP log. The pipes don't need to line up.</p>
+      <div class="code"><pre>| Date  | Commit message      | What I learned |
+|-------|---------------------|----------------|
+| 10/20 | Add first index.html | git init only once |
+| 10/21 | Add README          | -u on first push |</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>A README outline</h2>
+      <div class="code"><pre># Project name
+
+One sentence: what it is and who it's for.
+
+**Live site:** https://user.github.io/repo/
+
+## Built with
+- HTML, CSS, JavaScript
+
+## How to run it
+Open `index.html` in a browser.
+
+## What I learned</pre></div>
+      <p>Check your assignment page for the exact sections it requires.</p>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">Heading shows as <code>#Title</code></p><p class="fix">Put a space after the <code>#</code>.</p></div>
+      <div class="pit"><p class="bad">List runs into the paragraph above</p><p class="fix">Leave a blank line before the first <code>-</code>.</p></div>
+      <div class="pit"><p class="bad">Image is broken on GitHub</p><p class="fix">Paths are case-sensitive there. <code>Screenshot.PNG</code> is not <code>screenshot.png</code>.</p></div>
+      <div class="pit"><p class="bad">GitHub doesn't show it on the repo page</p><p class="fix">Name it <code>README.md</code> and put it in the top folder.</p></div>
+    </div>
+  </section>
+
+  <footer><a href="branches-prs.html">← Branches, PRs &amp; Pages</a><a href="semantic-html.html">Next: Semantic HTML &amp; Forms →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>JavaScript &amp; DOM Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 3 · Days 1–3</p>
+    <h1>JavaScript &amp; the DOM</h1>
+    <p class="lede">Store values, group them into objects, and change the page when the user does something.</p>
+    <div class="syntax"><span><b>select</b> an element</span><span><b>listen</b> for an event</span><span><b>update</b> the page</span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>Variables</h2>
+      <div class="code"><pre>const name = "Sam";     <span class="c">// can't be reassigned</span>
+let count = 0;          <span class="c">// can change</span>
+count = count + 1;</pre></div>
+      <p>Start with <code>const</code>. Switch to <code>let</code> only when the value has to change. Avoid <code>var</code>.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Types</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Type</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>string</td><td><code>"hello"</code>, <code>`Hi ${name}`</code></td></tr>
+          <tr><td>number</td><td><code>42</code>, <code>3.5</code></td></tr>
+          <tr><td>boolean</td><td><code>true</code>, <code>false</code></td></tr>
+          <tr><td>undefined</td><td>declared, never given a value</td></tr>
+          <tr><td>null</td><td>"empty on purpose"</td></tr>
+          <tr><td>array</td><td><code>["a", "b"]</code></td></tr>
+          <tr><td>object</td><td><code>{ name: "Sam" }</code></td></tr>
+        </tbody>
+      </table></div>
+      <p>Not sure what you have? <code>console.log(typeof x)</code></p>
+    </section>
+
+    <section class="rc">
+      <h2>Operators</h2>
+      <div class="code"><pre>5 + 2      <span class="c">// 7</span>
+"5" + 2    <span class="c">// "52"  string wins!</span>
+Number("5") + 2  <span class="c">// 7</span>
+10 % 3     <span class="c">// 1  remainder</span>
+
+3 === 3    <span class="c">// true  always use ===</span>
+3 === "3"  <span class="c">// false different types</span>
+3 !== 4    <span class="c">// true</span>
+
+age &gt;= 13 &amp;&amp; hasPermission  <span class="c">// and</span>
+isAdmin || isOwner          <span class="c">// or</span>
+!isLoggedIn                 <span class="c">// not</span></pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Objects</h2>
+      <div class="code"><pre>const member = {
+  name: "Ava",
+  plots: 2,
+  tools: ["trowel", "gloves"],
+};
+
+member.name           <span class="c">// "Ava"</span>
+member["plots"]       <span class="c">// 2</span>
+member.plots = 3;     <span class="c">// change</span>
+member.email = "a@x"; <span class="c">// add</span>
+member.tools[0]       <span class="c">// "trowel"</span></pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Functions</h2>
+      <div class="code"><pre>function greet(name) {
+  return `Welcome, ${name}!`;
+}
+
+const greet2 = (name) =&gt; `Welcome, ${name}!`;
+
+greet("Ava");  <span class="c">// "Welcome, Ava!"</span></pre></div>
+      <p>Without <code>return</code>, a function gives back <code>undefined</code>.</p>
+    </section>
+
+    <section class="rc">
+      <h2><code>this</code> <span class="when">Day 2</span></h2>
+      <p>Inside a regular method, <code>this</code> is the object before the dot.</p>
+      <div class="code"><pre>const plot = {
+  crop: "beans",
+  describe() {
+    return `Growing ${this.crop}`;
+  },
+};
+plot.describe();  <span class="c">// "Growing beans"</span></pre></div>
+      <p>Arrow functions don't get their own <code>this</code>, so don't use them as object methods.</p>
+    </section>
+
+    <section class="rc">
+      <h2>JSON round trip <span class="when">Day 2</span></h2>
+      <p>JSON is text that looks like an object. APIs and localStorage both use it.</p>
+      <div class="code"><pre>const text = JSON.stringify(member);
+<span class="c">// '{"name":"Ava","plots":3,...}'</span>
+
+const back = JSON.parse(text);
+back.name  <span class="c">// "Ava"</span></pre></div>
+      <p>In JSON, keys need double quotes and trailing commas aren't allowed.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Select elements</h2>
+      <div class="code"><pre>const form = document.querySelector("#signup");
+const title = document.querySelector("h1");
+const cards = document.querySelectorAll(".card");</pre></div>
+      <p>These use the same selectors as CSS: <code>#id</code>, <code>.class</code>, <code>tag</code>. If nothing matches, <code>querySelector</code> returns <code>null</code>.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Handle a form <span class="when">Day 3</span></h2>
+      <div class="code"><pre>const form = document.querySelector("#signup");
+const output = document.querySelector("#result");
+
+form.addEventListener("submit", (event) =&gt; {
+  event.preventDefault();  <span class="c">// stop the page reload</span>
+  const name = form.elements.name.value.trim();
+  output.textContent = `Thanks, ${name}!`;
+  form.reset();
+});</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Update the page safely</h2>
+      <div class="code"><pre><span class="c">// text from users or APIs: textContent</span>
+el.textContent = userInput;
+
+<span class="c">// build new elements</span>
+const li = document.createElement("li");
+li.textContent = member.name;
+li.classList.add("member");
+list.append(li);
+
+<span class="c">// clear a list before re-drawing it</span>
+list.replaceChildren();</pre></div>
+      <p>Don't put user or API text into <code>innerHTML</code>. If it contains HTML tags, the browser runs them.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Debug in the Console</h2>
+      <div class="code"><pre>console.log("form value:", name);
+console.table(members);   <span class="c">// arrays of objects as a table</span></pre></div>
+      <p>Open DevTools with <kbd>F12</kbd>. A red error shows the file and line number. Click it to jump there.</p>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">Cannot read properties of null</p><p class="fix">Your selector found nothing. Check the spelling, or that the script tag is at the end of <code>&lt;body&gt;</code>.</p></div>
+      <div class="pit"><p class="bad">The page reloads and your result vanishes</p><p class="fix">Add <code>event.preventDefault()</code> in the submit handler.</p></div>
+      <div class="pit"><p class="bad"><code>"2" + "3"</code> gives "23"</p><p class="fix">Input values are always strings. Convert with <code>Number()</code> first.</p></div>
+      <div class="pit"><p class="bad">Assignment to constant variable</p><p class="fix">You reassigned a <code>const</code>. Use <code>let</code> if it really needs to change.</p></div>
+    </div>
+  </section>
+
+  <footer><a href="css-layout.html">← Box Model &amp; Flexbox</a><a href="arrays.html">Next: Arrays &amp; Data →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

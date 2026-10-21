@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Box Model &amp; Flexbox Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 2 · Days 1, 3 and 4</p>
+    <h1>Box Model &amp; Flexbox</h1>
+    <p class="lede">Every element is a box. Flexbox lines boxes up in a row or a column, with space between them.</p>
+    <div class="syntax"><span><b>margin</b> › border › padding › content</span><span>display: <b>flex</b></span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>The box model</h2>
+      <div class="box m"><span class="lbl">margin: space outside</span>
+        <div class="box b"><span class="lbl">border</span>
+          <div class="box p"><span class="lbl">padding: space inside</span>
+            <div class="box ct">content (width × height)</div>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:12px">Add this to the top of every stylesheet, so <code>width</code> includes padding and border:</p>
+      <div class="code"><pre>*, *::before, *::after {
+  box-sizing: border-box;
+}</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Margin or padding?</h2>
+      <ul>
+        <li><strong>Padding</strong> is inside the border. The background color fills it. Use it to give text breathing room inside a button or card.</li>
+        <li><strong>Margin</strong> is outside the border and is always see-through. Use it to push boxes apart.</li>
+      </ul>
+      <div class="code"><pre>padding: 16px;            <span class="c">/* all sides */</span>
+padding: 8px 16px;        <span class="c">/* top+bottom, left+right */</span>
+margin: 0 auto;           <span class="c">/* center a box with a width */</span></pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Block or inline?</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>display</th><th>Behaves like</th></tr></thead>
+        <tbody>
+          <tr><td><code>block</code></td><td>Starts a new line and is full width. <code>div</code>, <code>p</code>, <code>h1</code>, <code>section</code></td></tr>
+          <tr><td><code>inline</code></td><td>Stays in the line of text, and <code>width</code> is ignored. <code>a</code>, <code>span</code>, <code>strong</code></td></tr>
+          <tr><td><code>inline-block</code></td><td>Stays in the line, but takes width, height and padding</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="rc">
+      <h2>Flex container</h2>
+      <p>These go on the <strong>parent</strong>. They arrange its direct children.</p>
+      <div class="code"><pre>.row {
+  display: flex;
+  flex-direction: row;       <span class="c">/* or column */</span>
+  justify-content: space-between;  <span class="c">/* main axis */</span>
+  align-items: center;       <span class="c">/* cross axis */</span>
+  gap: 16px;                 <span class="c">/* space between items */</span>
+  flex-wrap: wrap;           <span class="c">/* go to next line if needed */</span>
+}</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>justify-content values</h2>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td><code>flex-start</code></td><td>All at the start (default)</td></tr>
+          <tr><td><code>center</code></td><td>Grouped in the middle</td></tr>
+          <tr><td><code>flex-end</code></td><td>All at the end</td></tr>
+          <tr><td><code>space-between</code></td><td>First and last at the edges</td></tr>
+          <tr><td><code>space-around</code></td><td>Equal space around each item</td></tr>
+        </tbody>
+      </table></div>
+      <p>With <code>flex-direction: column</code>, the axes swap: <code>justify-content</code> works top to bottom.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Flex items</h2>
+      <p>These go on a <strong>child</strong>.</p>
+      <div class="code"><pre>.main-col { flex: 1; }      <span class="c">/* take the leftover space */</span>
+.sidebar  { flex: 0 0 240px; } <span class="c">/* stay 240px */</span>
+.logo     { margin-right: auto; } <span class="c">/* push the rest right */</span></pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Recipe: a nav bar</h2>
+      <div class="code"><pre>.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+}
+.site-header nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Recipe: a hero with an overlay <span class="when">Day 4</span></h2>
+      <p>A see-through dark layer over the photo keeps white text readable.</p>
+      <div class="code"><pre>.hero {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url("images/garden.jpg") center / cover;
+}</pre></div>
+      <p>In <code>rgba(0, 0, 0, 0.55)</code>, the last number is opacity: 0 is clear and 1 is solid.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Buttons people can use</h2>
+      <div class="code"><pre>.cta {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #1d5c3f;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.cta:hover { background: #164a32; }
+.cta:focus-visible {
+  outline: 3px solid #f2b705;
+  outline-offset: 3px;
+}</pre></div>
+      <p>Never set <code>outline: none</code> without adding a focus style back. Keyboard users need to see where they are.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Contrast</h2>
+      <p>Text needs enough contrast with what's behind it:</p>
+      <ul>
+        <li><strong>4.5 : 1</strong> for normal text</li>
+        <li><strong>3 : 1</strong> for large text (about 24px, or 19px bold)</li>
+      </ul>
+      <p>Check your colors with the WebAIM Contrast Checker or the color picker in DevTools.</p>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">Flex properties do nothing</p><p class="fix"><code>display: flex</code> goes on the parent, not on the items you want to move.</p></div>
+      <div class="pit"><p class="bad">Box is wider than the screen</p><p class="fix"><code>width: 100%</code> plus padding overflows. Add <code>box-sizing: border-box</code>.</p></div>
+      <div class="pit"><p class="bad"><code>width</code> on a link is ignored</p><p class="fix">Links are inline. Use <code>display: inline-block</code>.</p></div>
+      <div class="pit"><p class="bad">Vertical centering doesn't work</p><p class="fix">The container needs a height (like <code>min-height</code>) for there to be space to center in.</p></div>
+    </div>
+  </section>
+
+  <footer><a href="semantic-html.html">← Semantic HTML &amp; Forms</a><a href="js-basics.html">Next: JavaScript &amp; the DOM →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

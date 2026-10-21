@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>localStorage Card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">L2</span> Reference Cards</a>
+    <nav class="topnav" aria-label="Site"><a href="index.html">All cards</a><a href="links.html">Outside links</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">Week 7 · Days 1–4</p>
+    <h1>localStorage &amp; App State</h1>
+    <p class="lede">Remember a user's choices after they reload the page, and keep what's on screen in step with your data.</p>
+    <div class="syntax"><span><b>setItem</b>(key, string)</span><span><b>getItem</b>(key)</span><span><b>removeItem</b>(key)</span></div>
+  </div>
+
+  <div class="cards">
+    <section class="rc">
+      <h2>The four methods</h2>
+      <div class="code"><pre>localStorage.setItem("theme", "dark");
+localStorage.getItem("theme");    <span class="c">// "dark"</span>
+localStorage.getItem("nope");     <span class="c">// null</span>
+localStorage.removeItem("theme");
+localStorage.clear();             <span class="c">// everything for this site</span></pre></div>
+      <p>It only stores <strong>strings</strong>, and only in this browser on this computer.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Save an array or object</h2>
+      <div class="code"><pre>const favorites = ["Tomato", "Basil"];
+
+<span class="c">// save: turn it into a string</span>
+localStorage.setItem("favorites", JSON.stringify(favorites));
+
+<span class="c">// load: turn it back, with a default</span>
+const saved = JSON.parse(localStorage.getItem("favorites")) ?? [];</pre></div>
+      <p><code>JSON.parse(null)</code> gives <code>null</code>, so <code>?? []</code> starts you with an empty list the first time.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Load safely</h2>
+      <p>If the saved text gets corrupted, <code>JSON.parse</code> throws. Wrap it:</p>
+      <div class="code"><pre>function load(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function save(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>One source of truth</h2>
+      <p>Keep your data in one variable. When it changes: save, then re-draw.</p>
+      <div class="code"><pre>let favorites = load("favorites", []);
+render();
+
+function addFavorite(name) {
+  favorites.push(name);
+  save("favorites", favorites);
+  render();
+}
+
+function render() {
+  list.replaceChildren();
+  favorites.forEach((name) =&gt; {
+    const li = document.createElement("li");
+    li.textContent = name;
+    list.append(li);
+  });
+}</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>Remember the last search <span class="when">Day 1</span></h2>
+      <div class="code"><pre>input.value = localStorage.getItem("lastSearch") ?? "";
+
+form.addEventListener("submit", (e) =&gt; {
+  e.preventDefault();
+  const q = input.value.trim();
+  if (!q) return;
+  localStorage.setItem("lastSearch", q);
+  search(q);
+});</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>What to store, what not to</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Good fit</th><th>Never</th></tr></thead>
+        <tbody>
+          <tr><td>Theme, last search</td><td>API keys</td></tr>
+          <tr><td>Favorites, a to-do list</td><td>Passwords</td></tr>
+          <tr><td>Which tab was open</td><td>Anyone else's data</td></tr>
+        </tbody>
+      </table></div>
+      <p>Any script on the page can read localStorage, and so can anyone using the same browser.</p>
+    </section>
+
+    <section class="rc">
+      <h2>Style results with classes <span class="when">Day 4</span></h2>
+      <div class="code"><pre>const card = document.createElement("article");
+card.className = "card p-3 mb-3";       <span class="c">// Bootstrap</span>
+<span class="c">// card.className = "rounded-lg p-4 shadow"; // Tailwind</span>
+
+const title = document.createElement("h3");
+title.textContent = item.name;
+card.append(title);
+
+card.classList.toggle("is-favorite", favorites.includes(item.name));</pre></div>
+    </section>
+
+    <section class="rc">
+      <h2>See it in DevTools</h2>
+      <p><kbd>F12</kbd> → <strong>Application</strong> tab → <strong>Local storage</strong> → your site. You can view, edit and delete keys there. Clear them to test what a first-time visitor sees.</p>
+    </section>
+  </div>
+
+  <section class="pitfalls">
+    <h2>Common mix-ups</h2>
+    <div class="pit-grid">
+      <div class="pit"><p class="bad">Saved value is <code>[object Object]</code></p><p class="fix">You saved an object directly. Use <code>JSON.stringify</code> first.</p></div>
+      <div class="pit"><p class="bad"><code>.push is not a function</code></p><p class="fix">You loaded a string. Wrap the load in <code>JSON.parse</code>.</p></div>
+      <div class="pit"><p class="bad">Saved, but the page didn't change</p><p class="fix">Call <code>render()</code> after you save.</p></div>
+      <div class="pit"><p class="bad">Works for you but not the grader</p><p class="fix">Their storage is empty. Make sure the page works with nothing saved.</p></div>
+    </div>
+  </section>
+
+  <footer><a href="apis.html">← APIs &amp; Postman</a><a href="shortcuts.html">Next: VS Code &amp; DevTools →</a></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
